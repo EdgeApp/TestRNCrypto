@@ -3,17 +3,17 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"updot": "dotdotdep",
+		"updot": "updot",
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
 		"debug": "node --nolazy --inspect-brk=5858"
 	},
 	"dependencies": {
-		"dotdotdep": "git+ssh://git@github.com/Airbitz/dotdotdep.git",
-		"react-native-fast-crypto": "git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git",
+		"react-native-fast-crypto": "git+ssh://git@github.com/Airbitz/react-native-fast-crypto.git#fix-android",
 		"rfc4648": "^1.0.0"
 	},
 	"devDependencies": {
+		"updot": "^1.1.4",
 		"babel-jest": "20.0.3",
 		"babel-preset-react-native": "2.1.0",
 		"babel-register": "^6.18.0",
