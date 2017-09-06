@@ -53,10 +53,15 @@ const styles = StyleSheet.create({
 });
 
 async function helloCrypto () {
-  let passwd  = Uint8Array.from([45, 80, 92, 250, 67, 86, 92])
-  let salt    = Uint8Array.from([12, 253, 67, 8, 36, 90, 256, 23, 16, 24, 57])
-  const result = await crypto.scrypt(passwd, salt, 16384, 8, 1, 32)
-  console.log(result)
+  console.log("Starting crypto")
+  try {
+    var passwd  = new Uint8Array([45, 80, 92, 250, 67, 86, 92])
+    var salt    = new Uint8Array([12, 253, 67, 8, 36, 90, 256, 23, 16, 24, 57])
+    let result = await crypto.scrypt(passwd, salt, 16384, 8, 1, 32)
+    console.log("crypto ran. result = " + result);
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 helloCrypto()
