@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "standard",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended",
+    "plugin:react-native/all"
+  ],
+  "parser": "babel-eslint",
+  "plugins": [
+    "flowtype",
+    "standard",
+    "react",
+    "react-native"
+  ],
+  "rules": {
+    "camelcase": "error",
+    "flowtype/generic-spacing": "off",
+    "no-throw-literal": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "react-native/no-color-literals": 0
+  }
+}

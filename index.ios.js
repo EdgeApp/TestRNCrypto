@@ -5,8 +5,6 @@
  */
 
 import TestRNCrypto from './fastCryptoTest.js'
-import {
-  AppRegistry,
-} from 'react-native';
+import { AppRegistry } from 'react-native'
 
-AppRegistry.registerComponent('TestRNCrypto', () => TestRNCrypto);
+AppRegistry.registerComponent('TestRNCrypto', () => TestRNCrypto)
