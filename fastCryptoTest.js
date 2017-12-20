@@ -18,8 +18,9 @@ export default class TestRNCrypto extends Component {
   }
 
   async runtest () {
-    testScrypt(this.log)
-    testPublicKeyCreate(this.log)
+    await testScrypt(this.log)
+    await testPublicKeyCreate(this.log)
+    await testPrivateKeyTweakAdd(this.log)
   }
 
   log = (s) => {
@@ -109,8 +110,8 @@ async function testScrypt (log) {
 }
 
 async function testPublicKeyCreate (log) {
-  let privateKeyHex = '7bd083869bd02e57786d119a81d406ac1524a765470acee90834c60f841e6236'
-  let publicKeyHex = '02fce1b65c7470270fb89e5aa1dda253406b3370b948eae8a2a3539c4f25894283'
+  let privateKeyHex
+  let publicKeyHex
   let result
   let time
   privateKeyHex = '7bd083869bd02e57786d119a81d406ac1524a765470acee90834c60f841e6236'
@@ -170,4 +171,61 @@ async function testPublicKeyCreate (log) {
   log('PASSED secp256k1.publicKeyCreate 6')
 
   log('PASSED secp256k1.publicKeyCreate ALL')
+}
+
+async function testPrivateKeyTweakAdd (log) {
+  let privateKeyHex
+  let tweakHex
+  let privateKeyTweakAdd
+  let result
+  let time
+  privateKeyHex = '7bd083869bd02e57786d119a81d406ac1524a765470acee90834c60f841e6236'
+  tweakHex = 'e65bfe78107a0d9b60086753695f7e0b55ae4dd1248f2779803582c27a946ea1'
+  privateKeyTweakAdd = '622c81feac4a3bf2d87578edeb3384b8b024184fbc515626c897ea452e7c8f96'
+  time = Date.now()
+  result = await crypto.secp256k1.privateKeyTweakAdd(privateKeyHex, tweakHex)
+  time = Date.now() - time
+  if (result !== privateKeyTweakAdd) {
+    log('FAILED secp256k1.privateKeyTweakAdd 1')
+    return
+  }
+  log('PASSED secp256k1.privateKeyTweakAdd 1. Time:' + time.toString())
+
+  privateKeyHex = 'f1c7c871a54a804afe328b4c83a1c33b8e5ff48f5087273f04efa83b247d6a2d'
+  tweakHex = 'c9b5714c12f44f0df4caf76a557670dfeb4310bd7db193b6370b5ad5ccde8337'
+  privateKeyTweakAdd = 'bb7d39bdb83ecf58f2fd82b6d918341cbef428661ef01ab97c28a4842125ac23'
+  time = Date.now()
+  result = await crypto.secp256k1.privateKeyTweakAdd(privateKeyHex, tweakHex)
+  time = Date.now() - time
+  if (result !== privateKeyTweakAdd) {
+    log('FAILED secp256k1.privateKeyTweakAdd 2')
+    return
+  }
+  log('PASSED secp256k1.privateKeyTweakAdd 2. Time:' + time.toString())
+
+  privateKeyHex = '704addf544a06e5ee4bea37098463c23613da32020d604506da8c0518e1da4b7'
+  tweakHex = '817cea7c60aa11ec1973e7dbeb5b87182d22516f2fb122ee9746e7e9965fc576'
+  privateKeyTweakAdd = 'f1c7c871a54a804afe328b4c83a1c33b8e5ff48f5087273f04efa83b247d6a2d'
+  time = Date.now()
+  result = await crypto.secp256k1.privateKeyTweakAdd(privateKeyHex, tweakHex)
+  time = Date.now() - time
+  if (result !== privateKeyTweakAdd) {
+    log('FAILED secp256k1.privateKeyTweakAdd 3')
+    return
+  }
+  log('PASSED secp256k1.privateKeyTweakAdd 3. Time:' + time.toString())
+
+  privateKeyHex = '877c779ad9687164e9c2f4f0f4ff0340814392330693ce95a58fe18fd52e6e93'
+  tweakHex = 'e8ce665a6b37fcf9fafbae7fa34738e19aa8edd3c98ad5f687eb3d4e89257765'
+  privateKeyTweakAdd = '704addf544a06e5ee4bea37098463c23613da32020d604506da8c0518e1da4b7'
+  time = Date.now()
+  result = await crypto.secp256k1.privateKeyTweakAdd(privateKeyHex, tweakHex)
+  time = Date.now() - time
+  if (result !== privateKeyTweakAdd) {
+    log('FAILED secp256k1.privateKeyTweakAdd 1')
+    return
+  }
+  log('PASSED secp256k1.privateKeyTweakAdd 1. Time:' + time.toString())
+
+  log('PASSED secp256k1.privateKeyTweakAdd ALL')
 }
