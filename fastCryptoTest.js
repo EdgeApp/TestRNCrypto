@@ -21,6 +21,7 @@ export default class TestRNCrypto extends Component {
     await testScrypt(this.log)
     await testPublicKeyCreate(this.log)
     await testPrivateKeyTweakAdd(this.log)
+    await testPublicKeyTweakAdd(this.log)
   }
 
   log = (s) => {
@@ -222,10 +223,26 @@ async function testPrivateKeyTweakAdd (log) {
   result = await crypto.secp256k1.privateKeyTweakAdd(privateKeyHex, tweakHex)
   time = Date.now() - time
   if (result !== privateKeyTweakAdd) {
-    log('FAILED secp256k1.privateKeyTweakAdd 1')
+    log('FAILED secp256k1.privateKeyTweakAdd 4')
     return
   }
-  log('PASSED secp256k1.privateKeyTweakAdd 1. Time:' + time.toString())
+  log('PASSED secp256k1.privateKeyTweakAdd 4. Time:' + time.toString())
 
   log('PASSED secp256k1.privateKeyTweakAdd ALL')
+}
+
+async function testPublicKeyTweakAdd (log) {
+  const publicKeyHex = '02fce1b65c7470270fb89e5aa1dda253406b3370b948eae8a2a3539c4f25894283'
+  const tweakHex = '5e7ab5c14484291796c82b7ffd7ae72bc6a57cc53cc0d3b4312ddcf050c4a8af'
+  const publicKeyTweakAdd = '02e7eddf4cfa267c3b33a7e9387f28c55b6e806a79824c797b0f5acdfcdccc73e8'
+  let time = Date.now()
+  const result = await crypto.secp256k1.publicKeyTweakAdd(publicKeyHex, tweakHex, true)
+  time = Date.now() - time
+  if (result !== publicKeyTweakAdd) {
+    log('FAILED secp256k1.publicKeyTweakAdd 1')
+    return
+  }
+  log('PASSED secp256k1.publicKeyTweakAdd 1. Time:' + time.toString())
+
+  log('PASSED secp256k1.publicKeyTweakAdd ALL')
 }
