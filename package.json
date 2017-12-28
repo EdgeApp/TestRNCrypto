@@ -16,6 +16,7 @@
 		"coverage": "mocha --require source-map-support/register build/tests.cjs.js"
 	},
 	"dependencies": {
+		"buffer": "^5.0.8",
 		"react": "16.0.0-alpha.12",
 		"react-native": "^0.47.0",
 		"react-native-fast-crypto": "^1.2.4",
