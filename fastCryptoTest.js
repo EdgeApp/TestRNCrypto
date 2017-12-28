@@ -23,6 +23,7 @@ export default class TestRNCrypto extends Component {
     await testPublicKeyCreate(this.log)
     await testPrivateKeyTweakAdd(this.log)
     await testPublicKeyTweakAdd(this.log)
+    await testPbkdf2Sha512(this.log)
   }
 
   log = (s) => {
@@ -212,7 +213,6 @@ async function testPrivateKeyTweakAdd (log) {
   let privateKeyTweakAddHex
   let privateKey
   let tweak
-  let privateKeyTweakAdd
   let result
   let time
   let testName
@@ -232,7 +232,6 @@ async function testPrivateKeyTweakAdd (log) {
     return
   }
   log('PASSED ' + testName + '. Time:' + time.toString())
-
 
   testName = 'secp256k1.privateKeyTweakAdd 2'
   privateKeyHex = 'f1c7c871a54a804afe328b4c83a1c33b8e5ff48f5087273f04efa83b247d6a2d'
@@ -302,4 +301,89 @@ async function testPublicKeyTweakAdd (log) {
   log('PASSED secp256k1.publicKeyTweakAdd 1. Time:' + time.toString())
 
   log('PASSED secp256k1.publicKeyTweakAdd ALL')
+}
+
+async function testPbkdf2Sha512 (log) {
+  let key = ''
+  let salt = ''
+  let iter = 0
+  let outputBytes = 0
+  let result = ''
+  let time = 0
+  let hash = ''
+  let keyBuf = []
+  let saltBuf = []
+  let testName = ''
+
+  testName = 'pbkdf2.deriveAsync 1'
+  key = 'abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about'
+  salt = 'mnemonicTREZOR'
+  hash = 'c55257c360c07c72029aebc1b53c05ed0362ada38ead3e3e9efa3708e53495531f09a6987599d18264c1e1c92f2cf141630c7a3c4ab7c81b2f001698e7463b04'
+  iter = 2048
+  outputBytes = 64
+  time = Date.now()
+  keyBuf = Buffer.from(key, 'utf8')
+  saltBuf = Buffer.from(salt, 'utf8')
+  result = await crypto.pbkdf2.deriveAsync(keyBuf, saltBuf, iter, outputBytes, 'sha512')
+  result = result.toString('hex')
+  time = Date.now() - time
+  if (result.toLowerCase() !== hash.toLowerCase()) {
+    log('FAILED ' + testName)
+    return
+  }
+  log('PASSED ' + testName + '. Time:' + time.toString())
+
+  testName = 'pbkdf2.deriveAsync 2'
+  key = 'passDATAb00AB7YxDTT'
+  salt = 'saltKEYbcTcXHCBxtjD'
+  hash = 'CBE6088AD4359AF42E603C2A33760EF9D4017A7B2AAD10AF46F992C660A0B461ECB0DC2A79C2570941BEA6A08D15D6887E79F32B132E1C134E9525EEDDD744FA'
+  iter = 1
+  outputBytes = 64
+  time = Date.now()
+  keyBuf = Buffer.from(key, 'utf8')
+  saltBuf = Buffer.from(salt, 'utf8')
+  result = await crypto.pbkdf2.deriveAsync(keyBuf, saltBuf, iter, outputBytes, 'sha512')
+  result = result.toString('hex')
+  time = Date.now() - time
+  if (result.toLowerCase() !== hash.toLowerCase()) {
+    log('FAILED ' + testName)
+    return
+  }
+  log('PASSED ' + testName + '. Time:' + time.toString())
+
+  testName = 'pbkdf2.deriveAsync 3'
+  key = 'legal winner thank year wave sausage worth useful legal winner thank yellow'
+  salt = 'mnemonicTREZOR'
+  hash = '2e8905819b8723fe2c1d161860e5ee1830318dbf49a83bd451cfb8440c28bd6fa457fe1296106559a3c80937a1c1069be3a3a5bd381ee6260e8d9739fce1f607'
+  iter = 2048
+  outputBytes = 64
+  time = Date.now()
+  keyBuf = Buffer.from(key, 'utf8')
+  saltBuf = Buffer.from(salt, 'utf8')
+  result = await crypto.pbkdf2.deriveAsync(keyBuf, saltBuf, iter, outputBytes, 'sha512')
+  result = result.toString('hex')
+  time = Date.now() - time
+  if (result.toLowerCase() !== hash.toLowerCase()) {
+    log('FAILED ' + testName)
+    return
+  }
+  log('PASSED ' + testName + '. Time:' + time.toString())
+
+  testName = 'pbkdf2.deriveAsync 4'
+  key = 'letter advice cage absurd amount doctor acoustic avoid letter advice cage above'
+  salt = 'mnemonicTREZOR'
+  hash = 'd71de856f81a8acc65e6fc851a38d4d7ec216fd0796d0a6827a3ad6ed5511a30fa280f12eb2e47ed2ac03b5c462a0358d18d69fe4f985ec81778c1b370b652a8'
+  iter = 2048
+  outputBytes = 64
+  time = Date.now()
+  keyBuf = Buffer.from(key, 'utf8')
+  saltBuf = Buffer.from(salt, 'utf8')
+  result = await crypto.pbkdf2.deriveAsync(keyBuf, saltBuf, iter, outputBytes, 'sha512')
+  result = result.toString('hex')
+  time = Date.now() - time
+  if (result.toLowerCase() !== hash.toLowerCase()) {
+    log('FAILED ' + testName)
+    return
+  }
+  log('PASSED ' + testName + '. Time:' + time.toString())
 }
